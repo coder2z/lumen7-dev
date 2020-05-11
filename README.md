@@ -1,24 +1,48 @@
 # Lumen PHP Framework
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+#### 对Laravel6进行了小修改（也不算是修改,就算是把常用的东西整合上去）
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
-
-## Official Documentation
-
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### 1、返回接口统一
+    文件位置：
+        App\Helpers\json.php;
+    使用：
+        json_success($msg, $data);
+        json_fail($msg, $data);
+#### 2、Monolog\Logger整合
+    文件位置：
+        App\Helpers\logger.php;
+    使用：
+        logInfo($title, [$msg]);
+        logWarning($title, [$msg]);
+        logError($title, [$msg]);
+        logDebug($title, [$msg]);
+#### 3、JWT整合
+    文件位置：
+        App\Models\User
+    使用：
+        jwt整合到了auth，使用与auth一样
+#### 4、重写了异常处理
+    文件位置：
+        App\Exceptions\Handler
+    
+#### 5、整合了Repositories 设计模式
+        生成对应文件：
+            php artisan init:model-service
+        文件位置：
+            App\Repositories\*
+            App\Facades\*
+            App\Providers\RepositoryServiceProvider
+        使用：
+            use App\Facades\***;
+            ***::getFirst()...
+        这里封装的方法可以查看:
+            App\Traits\RepositoryBaseRepositoryTrait
+            App\Repositories\CommonRepository
+#### 6、在Helpers中封装了很多方法，也可以自己添加方法
+        文件位置：
+            App\Helpers\*
+#### 7、在 App\Traits\Controller\*下封装了一些公共的Controller方法，需要使用就use
+        文件位置：
+            App\Traits\Controller\*
+        使用：
+            use App\Facades\Controller\***;
